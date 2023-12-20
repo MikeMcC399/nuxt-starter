@@ -1,0 +1,24 @@
+name: test
+# This workflow represents a set of basic End-to-End tests
+on:
+  push:
+    branches:
+      - 'master'
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+
+  test-nuxt:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Cypress tests
+        uses: cypress-io/github-action@v6
+        with:
+          start: npm run dev
+          wait-on: 'http://localhost:3000/'
+        env:
+          DEBUG: '@cypress/github-action'
